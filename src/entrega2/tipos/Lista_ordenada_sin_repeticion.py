@@ -8,7 +8,6 @@ class Lista_ordenada_sin_repeticion(AgregadoLineal[E], Generic[E, R]):
         super().__init__()
         self._order = order
 
-    @staticmethod
     def of(order: Callable[[E], R]) -> "Lista_ordenada_sin_repeticion[E, R]":
         return Lista_ordenada_sin_repeticion(order)
 

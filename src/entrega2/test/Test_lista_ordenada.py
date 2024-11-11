@@ -14,6 +14,7 @@ elemento = lista.remove()
 print(elemento)
 
 
+
 #añado de nuevo el 1
 lista.add(1)
 
