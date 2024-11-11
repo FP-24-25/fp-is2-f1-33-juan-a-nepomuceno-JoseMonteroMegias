@@ -71,9 +71,9 @@ if __name__ == "__main__":
     cola = ColaDePrioridad[str, int]()
     
     # Añadir pacientes con sus prioridades
-    cola.add("Paciente A", 3)  # Menos grave
-    cola.add("Paciente B", 2)  # Moderado
-    cola.add("Paciente C", 1)  # Más grave
+    cola.add("Paciente Grave", 3)  # Menos grave
+    cola.add("Paciente Moderado", 2)  # Moderado
+    cola.add("Paciente Leve", 1)  # Más grave
     
     print(cola)  # Salida: ColaPrioridad[(Paciente A, 3), (Paciente B, 2), (Paciente C, 1)]
     
