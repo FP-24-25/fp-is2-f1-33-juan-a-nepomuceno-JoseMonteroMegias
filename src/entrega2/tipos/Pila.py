@@ -1,5 +1,5 @@
-from Agregado_lineal import AgregadoLineal
-from typing import Generic, TypeVar, List
+from entrega2.tipos.Agregado_lineal import AgregadoLineal
+from typing import TypeVar
 E = TypeVar('E')
 class Pila(AgregadoLineal[E]):
     def __init__(self):

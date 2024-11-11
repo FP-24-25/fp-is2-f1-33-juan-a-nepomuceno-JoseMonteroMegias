@@ -1,5 +1,5 @@
-from typing import Callable, Generic, TypeVar, List
-from Agregado_lineal import AgregadoLineal
+from typing import Callable, Generic, TypeVar
+from entrega2.tipos.Agregado_lineal import AgregadoLineal
 # Definimos tipos genéricos para los elementos y el criterio de ordenación
 E = TypeVar('E')
 R = TypeVar('R')
