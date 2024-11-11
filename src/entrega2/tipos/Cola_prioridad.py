@@ -1,57 +1,57 @@
-from typing import List, Tuple, Generic, TypeVar
+from typing import List, TypeVar, Generic
 
-E = TypeVar('E')  # Tipo de elemento
-P = TypeVar('P')  # Tipo de prioridad
+E = TypeVar('E')  # Tipo de los elementos
+P = TypeVar('P')  # Tipo de las prioridades
 
-class ColaDePrioridad(Generic[E, P]):
+class Cola_de_prioridad(Generic[E, P]):
     def __init__(self):
-        self._elements: List[E] = []  # Lista de elementos
-        self._priorities: List[P] = []  # Lista de prioridades correspondientes a los elementos
-
+        self._elements: List[E] = []  # Lista para almacenar los elementos
+        self._priorities: List[P] = []  # Lista para almacenar las prioridades
+    
     def size(self) -> int:
-        """Devuelve el número de elementos en la cola de prioridad."""
+        """Devuelve el número de elementos en la cola."""
         return len(self._elements)
-
+    
     def is_empty(self) -> bool:
         """Devuelve True si la cola está vacía, False en caso contrario."""
         return len(self._elements) == 0
-
+    
     def elements(self) -> List[E]:
-        """Devuelve la lista completa de elementos."""
+        """Devuelve la lista de los elementos almacenados en la cola."""
         return self._elements
-
-    def index_order(self, priority: P) -> int:
-        """Calcula el índice en el que se debe insertar el nuevo elemento, basado en su prioridad."""
-        for i, p in enumerate(self._priorities):
-            if priority > p:  # Si la nueva prioridad es mayor, se inserta antes
-                return i
-        return len(self._elements)  # Si es la prioridad más baja, se inserta al final
-
+    
     def add(self, e: E, priority: P) -> None:
-        """Añade un elemento con una prioridad determinada en la posición correcta."""
-        index = self.index_order(priority)
+        """Añade un elemento con su prioridad a la cola, manteniendo el orden correcto."""
+        index = self._index_order(priority)
         self._elements.insert(index, e)
         self._priorities.insert(index, priority)
-
-    def add_all(self, ls: List[Tuple[E, P]]) -> None:
-        """Añade múltiples elementos a la cola con sus respectivas prioridades."""
-        for e, p in ls:
-            self.add(e, p)
-
+    
+    def add_all(self, ls: List[tuple[E, P]]) -> None:
+        """Añade una lista de elementos con sus prioridades a la cola."""
+        for e, priority in ls:
+            self.add(e, priority)
+    
     def remove(self) -> E:
-        """Elimina y devuelve el elemento con la mayor prioridad (el primero en la lista)."""
+        """Elimina y devuelve el elemento con la mayor prioridad."""
         assert len(self._elements) > 0, 'El agregado está vacío'
-        return self._elements.pop(0)
-
+        return self._elements.pop(0)  # El primer elemento es el de mayor prioridad
+    
     def remove_all(self) -> List[E]:
-        """Elimina todos los elementos y devuelve la lista de elementos eliminados."""
+        """Elimina todos los elementos y devuelve una lista con los eliminados."""
         removed_elements = self._elements[:]
         self._elements.clear()
         self._priorities.clear()
         return removed_elements
-
+    
+    def _index_order(self, priority: P) -> int:
+        """Calcula el índice en el que se debe insertar un nuevo elemento según su prioridad."""
+        for i, p in enumerate(self._priorities):
+            if priority < p:  # Se insertará antes de este elemento si su prioridad es menor
+                return i
+        return len(self._elements)  # Si la prioridad es mayor que todas, se añade al final
+    
     def decrease_priority(self, e: E, new_priority: P) -> None:
-        """Disminuye la prioridad de un elemento e."""
+        """Disminuye la prioridad de un elemento y lo recoloca si es necesario."""
         if e in self._elements:
             index = self._elements.index(e)
             old_priority = self._priorities[index]
@@ -63,23 +63,4 @@ class ColaDePrioridad(Generic[E, P]):
 
     def __repr__(self) -> str:
         """Representación como cadena de la cola de prioridad."""
-        return f"ColaPrioridad[{', '.join(f'({e}, {p})' for e, p in zip(self._elements, self._priorities))}]"
-
-# Ejemplo de uso
-if __name__ == "__main__":
-    # Crear una cola de prioridad para gestionar pacientes
-    cola = ColaDePrioridad[str, int]()
-    
-    # Añadir pacientes con sus prioridades
-    cola.add("Paciente Grave", 3)  # Menos grave
-    cola.add("Paciente Moderado", 2)  # Moderado
-    cola.add("Paciente Leve", 1)  # Más grave
-    
-    print(cola)  # Salida: ColaPrioridad[(Paciente A, 3), (Paciente B, 2), (Paciente C, 1)]
-    
-    # Eliminar el paciente con la mayor prioridad
-    print("Paciente atendido:", cola.remove())  # Salida: Paciente A
-    
-    # Cambiar la prioridad de un paciente
-    cola.decrease_priority("Paciente B", 0)
-    print("Después de cambiar la prioridad:", cola)  # Salida: ColaPrioridad[(Paciente B, 0), (Paciente C, 1)]
+        return f"ColaPrioridad" + str(list(zip(self._elements, self._priorities)))
