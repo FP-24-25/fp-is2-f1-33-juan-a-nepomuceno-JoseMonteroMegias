@@ -1,5 +1,4 @@
 from entrega2.tipos.Lista_ordenada import *
-from typing import Callable, Generic, TypeVar
 
 # 1
 
